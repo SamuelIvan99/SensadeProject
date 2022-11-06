@@ -29,7 +29,9 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
             SpaceNo = entityToCreate.SpaceNo,
             ParkingAreaId = entityToCreate.ParkingAreaId
         };
-        string query = "INSERT INTO parking_space(status, space_no, parking_area_id) VALUES (@Status, @SpaceNo, @ParkingAreaId)";
+        string query = "INSERT INTO parking_space(status, space_no, parking_area_id) " +
+                        "VALUES (@Status, @SpaceNo, @ParkingAreaId)";
+
         var result = (await connection.ExecuteAsync(query, parameters)) > 0;
 
         return result;
@@ -40,7 +42,9 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         using var connection = OpenConnection();
 
         var parameters = new { Id = id };
-        string query = "DELETE FROM parking_space WHERE id=@Id";
+        string query = "DELETE FROM parking_space " +
+                        "WHERE id=@Id";
+
         var result = (await connection.ExecuteAsync(query, parameters)) > 0;
 
         return result;
@@ -50,7 +54,9 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
     {
         using var connection = OpenConnection();
 
-        string query = "SELECT id, status, space_no SpaceNo, parking_area_id ParkingAreaId FROM parking_space";
+        string query = "SELECT id, status, space_no SpaceNo, parking_area_id ParkingAreaId " +
+                        "FROM parking_space";
+
         var parkingSpaces = (await connection.QueryAsync<ParkingSpace>(query)).ToList();
 
         return parkingSpaces;
@@ -61,8 +67,11 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         using var connection = OpenConnection();
 
         var parameters = new { Id = id };
-        string query = "SELECT id, status, space_no SpaceNo, parking_area_id ParkingAreaId FROM parking_space WHERE id=@Id";
-        var parkingSpace = (await connection.QueryFirstOrDefaultAsync<ParkingSpace>(query));
+        string query = "SELECT id, status, space_no SpaceNo, parking_area_id ParkingAreaId " +
+                        "FROM parking_space " +
+                        "WHERE id=@Id";
+
+        var parkingSpace = await connection.QueryFirstOrDefaultAsync<ParkingSpace>(query);
 
         return parkingSpace;
     }
@@ -76,8 +85,11 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
             ParkingAreaId = parkingAreaId,
             Status = status,
         };
-        string query = "SELECT COUNT(id) FROM parking_space WHERE parking_area=@ParkingAreaId AND status=@Status";
-        int result = (await connection.ExecuteScalarAsync<int>(query));
+        string query = "SELECT COUNT(id) " +
+                        "FROM parking_space " +
+                        "WHERE parking_area=@ParkingAreaId AND status=@Status";
+
+        int result = await connection.ExecuteScalarAsync<int>(query);
 
         return result;
     }
@@ -90,8 +102,11 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         {
             ParkingAreaId = parkingAreaId,
         };
-        string query = "SELECT COUNT(id) FROM parking_space WHERE parking_area=@ParkingAreaId";
-        int result = (await connection.ExecuteScalarAsync<int>(query));
+        string query = "SELECT COUNT(id) " +
+                        "FROM parking_space " +
+                        "WHERE parking_area=@ParkingAreaId";
+
+        int result = await connection.ExecuteScalarAsync<int>(query);
 
         return result;
     }
@@ -108,7 +123,10 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
             SpaceNo = entityToUpdate.SpaceNo,
             ParkingAreaId = entityToUpdate.ParkingAreaId
         };
-        string query = "UPDATE parking_space SET status=@Status, space_no=@SpaceNo, parking_area_id=@ParkingAreaId WHERE id=@Id";
+        string query = "UPDATE parking_space " +
+                        "SET status=@Status, space_no=@SpaceNo, parking_area_id=@ParkingAreaId " +
+                        "WHERE id=@Id";
+
         var result = (await connection.ExecuteAsync(query, parameters)) > 0;
 
         return result;
@@ -123,7 +141,10 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
             Id = id,
             Status = status
         };
-        string query = "UPDATE parking_space SET status=@Status WHERE id=@Id";
+        string query = "UPDATE parking_space " +
+                        "SET status=@Status " +
+                        "WHERE id=@Id";
+
         var result = (await connection.ExecuteAsync(query, parameters)) > 0;
 
         return result;
