@@ -3,8 +3,9 @@
 public enum Status
 {
     FREE,
-    UNAVAILABLE
+    OCCUPIED
 }
+
 public class ParkingSpace
 {
     public int Id { get; set; }

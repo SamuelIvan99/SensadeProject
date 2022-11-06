@@ -1,7 +1,7 @@
 ﻿-- create tables for initial model classes
 
 -- create type for status attribute in parking_space
-CREATE TYPE status AS ENUM('FREE', 'UNAVAILABLE');
+CREATE TYPE status AS ENUM('FREE', 'OCCUPIED');
 
 -- create parking_area table
 CREATE TABLE parking_area (
