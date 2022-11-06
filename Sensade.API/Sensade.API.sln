@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensade.API", "Sensade.API.csproj", "{AF290991-8F22-4324-A74A-A7E12FC783A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensade.DataAccess", "..\Sensade.DataAccess\Sensade.DataAccess.csproj", "{46B68C59-03F0-4F2A-944F-50ABA0F501C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensade.Shared", "..\Sensade.Shared\Sensade.Shared.csproj", "{E27ACFB8-4529-4394-9543-46BCFD738D7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AF290991-8F22-4324-A74A-A7E12FC783A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF290991-8F22-4324-A74A-A7E12FC783A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF290991-8F22-4324-A74A-A7E12FC783A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B68C59-03F0-4F2A-944F-50ABA0F501C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B68C59-03F0-4F2A-944F-50ABA0F501C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B68C59-03F0-4F2A-944F-50ABA0F501C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B68C59-03F0-4F2A-944F-50ABA0F501C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E27ACFB8-4529-4394-9543-46BCFD738D7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E27ACFB8-4529-4394-9543-46BCFD738D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E27ACFB8-4529-4394-9543-46BCFD738D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E27ACFB8-4529-4394-9543-46BCFD738D7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
