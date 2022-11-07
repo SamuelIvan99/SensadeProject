@@ -38,7 +38,7 @@ public class ParkingSpaceController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogInformation($"Parking space was not created. {ex}");
-            return BadRequest($"Parking area space not created. {ex}");
+            return BadRequest($"Parking space was not created. {ex}");
         }
     }
 
@@ -106,13 +106,55 @@ public class ParkingSpaceController : ControllerBase
             else
             {
                 _logger.LogInformation($"Parking space with id={entity.Id} failed to be updated.");
-                return NotFound($"Parking space with id={entity.Id} was not found.");
+                return NotFound($"Parking space with id={entity.Id} failed to be updated.");
             }
         }
         catch (Exception ex)
         {
             _logger.LogInformation($"Parking space was not updated. {ex}");
-            return BadRequest($"Parking area space was not updated. {ex}");
+            return BadRequest($"Parking space was not updated. {ex}");
         }
+    }
+
+    [HttpPut("UpdateStatus")]
+    public async Task<ActionResult<bool>> UpdateStatus([FromBody] ParkingSpace entity)
+    {
+        try
+        {
+            var result = await _parkingSpaceRepository.Update(entity.Id, entity.Status);
+            if (result)
+            {
+                _logger.LogInformation($"Parking space with id={entity.Id} was successfully updated.");
+                return Ok(result);
+            }
+            else
+            {
+                _logger.LogInformation($"Parking space with id={entity.Id} failed to be updated.");
+                return NotFound($"Parking space with id={entity.Id} failed to be updated.");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogInformation($"Parking space was not updated. {ex}");
+            return BadRequest($"Parking space was not updated. {ex}");
+        }
+    }
+
+    [HttpGet("Total/{parkingAreaId}")]
+    public async Task<ActionResult<int>> GetTotal(int parkingAreaId)
+    {
+        int result = await _parkingSpaceRepository.GetTotal(parkingAreaId);
+
+        _logger.LogInformation($"Total parking spaces for parking area with id={parkingAreaId} is result={result}.");
+        return Ok(result);
+    }
+
+    [HttpGet("Free/{parkingAreaId}")]
+    public async Task<ActionResult<int>> GetFree(int parkingAreaId)
+    {
+        int result = await _parkingSpaceRepository.GetFree(parkingAreaId);
+
+        _logger.LogInformation($"Free parking spaces for parking area with id={parkingAreaId} is result={result}.");
+        return Ok(result);
     }
 }

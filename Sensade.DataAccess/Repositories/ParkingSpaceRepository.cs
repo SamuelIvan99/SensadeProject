@@ -10,7 +10,7 @@ public interface IParkingSpaceRepository : IRepository<ParkingSpace>
 
     public Task<int> GetTotal(int parkingAreaId);
 
-    public Task<int> GetFree(int parkingAreaId, string status);
+    public Task<int> GetFree(int parkingAreaId);
 }
 
 public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
@@ -75,20 +75,20 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         return parkingSpace;
     }
 
-    public async Task<int> GetFree(int parkingAreaId, string status)
+    public async Task<int> GetFree(int parkingAreaId)
     {
         using var connection = OpenConnection();
 
         var parameters = new
         {
             ParkingAreaId = parkingAreaId,
-            Status = status,
+            Status = Status.FREE,
         };
         string query = "SELECT COUNT(id) " +
                         "FROM parking_space " +
-                        "WHERE parking_area=@ParkingAreaId AND status=@Status";
+                        "WHERE parking_area_id=@ParkingAreaId AND status=@Status";
 
-        int result = await connection.ExecuteScalarAsync<int>(query);
+        int result = await connection.ExecuteScalarAsync<int>(query, parameters);
 
         return result;
     }
@@ -103,9 +103,9 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         };
         string query = "SELECT COUNT(id) " +
                         "FROM parking_space " +
-                        "WHERE parking_area=@ParkingAreaId";
+                        "WHERE parking_area_id=@ParkingAreaId";
 
-        int result = await connection.ExecuteScalarAsync<int>(query);
+        int result = await connection.ExecuteScalarAsync<int>(query, parameters);
 
         return result;
     }
@@ -137,7 +137,7 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         var parameters = new
         {
             Id = id,
-            Status = status.ToString()
+            Status = Status.FREE
         };
         string query = "UPDATE parking_space " +
                         "SET status=@Status " +

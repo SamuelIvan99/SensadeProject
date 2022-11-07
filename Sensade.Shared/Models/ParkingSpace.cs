@@ -1,8 +1,12 @@
-﻿namespace Sensade.Shared.Models;
+﻿using NpgsqlTypes;
+
+namespace Sensade.Shared.Models;
 
 public enum Status
 {
+    [PgName("FREE")]
     FREE,
+    [PgName("OCCUPIED")]
     OCCUPIED
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Sensade.Shared.Models;
 
 namespace Sensade.DataAccess.Repositories;
 
@@ -16,6 +17,7 @@ public class BaseRepository
     {
         var connection = new NpgsqlConnection(_connectionString);
         connection.Open();
+        connection.TypeMapper.MapEnum<Status>();
         return connection;
     }
 }
