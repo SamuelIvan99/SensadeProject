@@ -10,7 +10,7 @@ public class ParkingSpace
 {
     public int Id { get; set; }
 
-    public Status Status { get; set; } = Status.FREE;
+    public string Status { get; set; } = string.Empty;
 
     public int SpaceNo { get; set; }
 

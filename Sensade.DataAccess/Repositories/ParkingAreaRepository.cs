@@ -17,6 +17,14 @@ public class ParkingAreaRepository : BaseRepository, IParkingAreaRepository
 
     public async Task<bool> Create(ParkingArea entityToCreate)
     {
+        // add guards class?
+        if (string.IsNullOrEmpty(entityToCreate.StreetAddress) ||
+            string.IsNullOrEmpty(entityToCreate.City) ||
+            string.IsNullOrEmpty(entityToCreate.ZipCode))
+        {
+            throw new Exception("Parking area parameters can't be null or empty.");
+        }
+
         using var connection = OpenConnection();
 
         var parameters = new
@@ -67,15 +75,22 @@ public class ParkingAreaRepository : BaseRepository, IParkingAreaRepository
 
         var parameters = new { Id = id };
         string query = "SELECT id, street_address StreetAddress, city, zip_code ZipCode, latitude, longitude " +
-                        "FROM parking_area" +
+                        "FROM parking_area " +
                         "WHERE id=@Id";
-        var parkingArea = await connection.QueryFirstOrDefaultAsync<ParkingArea>(query);
+        var parkingArea = await connection.QueryFirstOrDefaultAsync<ParkingArea>(query, parameters);
 
         return parkingArea;
     }
 
     public async Task<bool> Update(ParkingArea entityToUpdate)
     {
+        if (string.IsNullOrEmpty(entityToUpdate.StreetAddress) ||
+            string.IsNullOrEmpty(entityToUpdate.City) ||
+            string.IsNullOrEmpty(entityToUpdate.ZipCode))
+        {
+            throw new Exception("Parking area parameters can't be null or empty.");
+        }
+
         using var connection = OpenConnection();
 
         var parameters = new

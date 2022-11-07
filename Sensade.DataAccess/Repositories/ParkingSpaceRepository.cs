@@ -6,11 +6,11 @@ namespace Sensade.DataAccess.Repositories;
 
 public interface IParkingSpaceRepository : IRepository<ParkingSpace>
 {
-    public Task<bool> Update(int id, Status status);
+    public Task<bool> Update(int id, string status);
 
     public Task<int> GetTotal(int parkingAreaId);
 
-    public Task<int> GetFree(int parkingAreaId, Status status);
+    public Task<int> GetFree(int parkingAreaId, string status);
 }
 
 public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
@@ -25,12 +25,11 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
 
         var parameters = new
         {
-            Status = entityToCreate.Status,
             SpaceNo = entityToCreate.SpaceNo,
             ParkingAreaId = entityToCreate.ParkingAreaId
         };
-        string query = "INSERT INTO parking_space(status, space_no, parking_area_id) " +
-                        "VALUES (@Status, @SpaceNo, @ParkingAreaId)";
+        string query = "INSERT INTO parking_space(space_no, parking_area_id) " +
+                        "VALUES (@SpaceNo, @ParkingAreaId)";
 
         var result = (await connection.ExecuteAsync(query, parameters)) > 0;
 
@@ -71,12 +70,12 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
                         "FROM parking_space " +
                         "WHERE id=@Id";
 
-        var parkingSpace = await connection.QueryFirstOrDefaultAsync<ParkingSpace>(query);
+        var parkingSpace = await connection.QueryFirstOrDefaultAsync<ParkingSpace>(query, parameters);
 
         return parkingSpace;
     }
 
-    public async Task<int> GetFree(int parkingAreaId, Status status)
+    public async Task<int> GetFree(int parkingAreaId, string status)
     {
         using var connection = OpenConnection();
 
@@ -113,7 +112,6 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
 
     public async Task<bool> Update(ParkingSpace entityToUpdate)
     {
-        // add error handling - what if we update fk_parking_area to something that doesn't exist?   
         using var connection = OpenConnection();
 
         var parameters = new
@@ -132,14 +130,14 @@ public class ParkingSpaceRepository : BaseRepository, IParkingSpaceRepository
         return result;
     }
 
-    public async Task<bool> Update(int id, Status status)
+    public async Task<bool> Update(int id, string status)
     {
         using var connection = OpenConnection();
 
         var parameters = new
         {
             Id = id,
-            Status = status
+            Status = status.ToString()
         };
         string query = "UPDATE parking_space " +
                         "SET status=@Status " +

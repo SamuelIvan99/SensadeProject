@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="Migrations\001-initial.sql" />
+    <None Remove="Migrations\002-insertMockData.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Migrations\001-initial.sql" />
+    <EmbeddedResource Include="Migrations\002-insertMockData.sql" />
   </ItemGroup>
 
   <ItemGroup>

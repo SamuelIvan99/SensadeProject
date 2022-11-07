@@ -17,8 +17,8 @@ CREATE TABLE parking_area (
 CREATE TABLE parking_space(
 	id serial PRIMARY KEY,
 	status status DEFAULT 'FREE',
-	space_no INT NOT NULL,
-	parking_area_id INT,
+	space_no INT NOT NULL CHECK(space_no > 0),
+	parking_area_id INT NOT NULL,
 	CONSTRAINT fk_parking_area FOREIGN KEY(parking_area_id) REFERENCES parking_area(id),
 	CONSTRAINT unique_space_in_area UNIQUE(parking_area_id, space_no)
 );
